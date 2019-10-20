@@ -10,3 +10,12 @@ patch:
         patched: '2019-09-11T23:22:16.045Z'
     - auth0 > jwks-rsa > lru-memoizer > lodash:
         patched: '2019-09-11T23:22:16.045Z'
+  SNYK-JS-HTTPSPROXYAGENT-469131:
+    - snyk > proxy-agent > https-proxy-agent:
+        patched: '2019-10-20T02:02:50.096Z'
+    - snyk > proxy-agent > pac-proxy-agent > https-proxy-agent:
+        patched: '2019-10-20T02:02:50.096Z'
+    - auth0 > rest-facade > superagent-proxy > proxy-agent > https-proxy-agent:
+        patched: '2019-10-20T02:02:50.096Z'
+    - auth0 > rest-facade > superagent-proxy > proxy-agent > pac-proxy-agent > https-proxy-agent:
+        patched: '2019-10-20T02:02:50.096Z'
