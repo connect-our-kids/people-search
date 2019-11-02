@@ -6,8 +6,19 @@
   margin-bottom: 2em;
 }
 
+.addressExplainer {
+  color: #999;
+  margin-bottom: 1em;
+}
 .searchType {
     margin-top: 1.5em;
+
+  @include respond-below(xs) {
+    a:nth-of-type(1) {
+      margin-left: 0px;
+    }
+  }
+
 
   a {
     margin-left: 2em;
@@ -34,6 +45,7 @@
   margin-bottom: 10px;
 }
 
+
 .searchInputWrapper,
 .locationInputWrapper {
   height: 3em;
@@ -41,6 +53,7 @@
   input {
     width: 100%;
   }
+
 }
 .searchFormInputsWrapper input[type=text] {
     font-size: 2em;
@@ -50,6 +63,11 @@
     border-radius: 4px;
     outline: none;
     width: 100%;
+
+
+  &::placeholder {
+    font-weight: 100;
+  }
 
   @include respond-below(sm) {
     font-size: 1em;

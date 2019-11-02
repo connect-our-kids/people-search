@@ -210,7 +210,7 @@ export class SearchFormComponent implements OnInit {
     }
 
     if (searchType === SearchType.ADDRESS) {
-      return 'Mailing address';
+      return '123 Main St, Metropolis, IL';
     }
 
     if (searchType === SearchType.NAME) {
