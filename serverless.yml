@@ -22,7 +22,6 @@ provider:
     AUTH0_DOMAIN: https://login.connectourkids.org/
     AUTH0_CLIENT_ID: ${self:custom.auth0ClientId.${self:provider.stage}}
     AUTH0_AUDIENCE: ${self:custom.auth0Audience.${self:provider.stage}}
-    AUTH0_FAMILY_CONNECTIONS_AUDIENCE: ${self:custom.auth0FamilyConnectionsAudience.${self:provider.stage}}
   iamRoleStatements:
     - Effect: "Allow"
       Action:
@@ -92,11 +91,8 @@ custom:
     production: i5NGofkl7Z4jEexA7YTbasrLT8pcKLDU
     dev: JUR6JVt9N4sn8bHrSXR818rwrj91hsTb
   auth0Audience:
-    production: https://search.connectourkids.org/api/
-    dev: https://dev.search.connectourkids.org/api/
-  auth0FamilyConnectionsAudience:
-    production: https://family.connectourkids.org/api/v1/
-    dev: https://family-staging.connectourkids.org/api/v1/
+    production: https://search.connectourkids.org/api/ https://family.connectourkids.org/api/v1 https://api.connectourkids.org/
+    dev: https://dev.search.connectourkids.org/api/ https://family-staging.connectourkids.org/api/v1/ https://api-dev.connectourkids.org/ https://api-staging.connectourkids.org/
   auth0ManagementClientId:
     production: ${ssm:/people-search/auth0/management-client-secret~true}
     dev: ${ssm:/people-search/auth0/management-client-secret~true}
