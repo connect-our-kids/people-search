@@ -22,14 +22,12 @@ export class FooterComponent implements OnInit {
 
   privacyClick() {
     this.analytics.sendEvent('click', 'privacy');
-    this.router.navigate(['/privacy']);
-    window.scrollTo(0, 0);
+    window.location.href = 'https://www.connectourkids.org/privacy';
   }
 
   termsClick() {
     this.analytics.sendEvent('click', 'terms');
-    this.router.navigate(['/terms']);
-    window.scrollTo(0, 0);
+    window.location.href = 'https://www.connectourkids.org/terms';
   }
 
 }

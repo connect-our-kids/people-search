@@ -55,15 +55,20 @@ export class AnalyticsService {
       return;
     }
 
+
+    let eventName = verb + '-' +  noun;
+    if (outcome != null) {
+      eventName += '-' + outcome;
+    }
+
+    this.sendIntercomEvents(eventName);
+
+    const bodyObject = new Object();
+    bodyObject['event'] = eventName;
+
     const headers = new HttpHeaders();
     headers.set('Content-Type', 'application/json; charset=utf-8');
 
-    const bodyObject = new Object();
-    bodyObject['event'] = verb + '-' + noun;
-
-    if (outcome != null) {
-      bodyObject['event'] += '-' + outcome;
-    }
 
     bodyObject['emailAddress'] = this.emailAddress;
 
@@ -79,6 +84,27 @@ export class AnalyticsService {
       (response) => {},
       (error) => {console.log(error); }
     );
+  }
+
+
+  /** We want to track a limited number of events in Intercomm */
+  private sendIntercomEvents(event: string) {
+
+    if (window.location.href.indexOf('localhost') !== -1) {
+      return;
+    }
+
+    // @ts-ignore
+    if ( window.Intercom == null ) {
+      return;
+    }
+
+    if (event === 'search') {
+      // @ts-ignore
+      window.Intercom('trackEvent', 'people-search-search-person');
+    }
+
+
   }
 
 }
