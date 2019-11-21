@@ -152,7 +152,7 @@
         <div class="col-sm-3 sectionLabel">Relationships</div>
         <div class="col-sm-9">
           <div class="dataRow" *ngFor="let relationship of filterRelationships(searchResult.person?.relationships); let in = index">
-            <a href="javascript:void(0)" (click)="relationshipClick(relationship)" target="_blank">{{generateRelationshipDisplay(relationship)}}</a>
+            <a href="javascript:void(0)" (click)="relationshipClick(relationship)">{{generateRelationshipDisplay(relationship)}}</a>
             <div class="metaData">
               <span *ngIf="authenticated() && relationship['@type'] != null">{{relationship["@type"]}}</span>
             </div>
@@ -180,7 +180,7 @@
           *ngFor="let person of searchResult.possible_persons"
           (click)="personClick($event, person)">
           <div class="col-3 col-sm-2">
-            <a href="{{generatePersonLink(person)}}">
+            <a href="javascript:void(0)">
               <img src="{{generateThumbnailUrl(person)}}"
                  width="75" height="75"
                  /></a>

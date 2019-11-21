@@ -88,18 +88,16 @@ export class AnalyticsService {
 
 
   /** We want to track a limited number of events in Intercomm */
-  private sendIntercomEvents(event: string) {
+  private sendIntercomEvents(eventString: string) {
 
-    if (window.location.href.indexOf('localhost') !== -1) {
-      return;
-    }
 
     // @ts-ignore
     if ( window.Intercom == null ) {
       return;
     }
 
-    if (event === 'search') {
+    // tslint:disable-next-line:triple-equals
+    if (eventString == 'search-person-success') {
       // @ts-ignore
       window.Intercom('trackEvent', 'people-search-search-person');
     }

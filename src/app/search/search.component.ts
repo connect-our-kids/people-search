@@ -278,9 +278,10 @@ export class SearchComponent implements OnInit {
     personName += ' ' + this.searchResult.person.names[0].last;
 
 
-    this.router.navigate(['/search', { t: SearchType.NAME, m: relationship.names[0].display, r: personName}]);
+    window.open('/search;t=' + SearchType.NAME + ';m=' + relationship.names[0].display + ';r=' + personName);
+    // this.router.navigate(['/search', { t: SearchType.NAME, m: relationship.names[0].display, r: personName}]);
 
-    window.scroll(0, 0);
+    // window.scroll(0, 0);
 
   }
 
