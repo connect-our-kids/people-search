@@ -419,7 +419,7 @@ export class SearchComponent implements OnInit {
       return;
     }
 
-    this.modal.open(this.urlActionModal, {backdrop: 'static'}).result.then(
+    this.modal.open(this.urlActionModal, {backdrop: true}).result.then(
       result => {
         if ( result === ModalResult.ACTION ) {
 
@@ -438,7 +438,7 @@ export class SearchComponent implements OnInit {
               }
           );
 
-          this.router.navigate(['/search', {t: SearchType.URL, m: url.url}]);
+          window.open( '/search;t=url;m=' + encodeURIComponent(url.url));
 
         }
       }
@@ -456,7 +456,7 @@ export class SearchComponent implements OnInit {
       return;
     }
 
-    this.modal.open(this.addressActionModal, {backdrop: 'static'}).result.then(
+    this.modal.open(this.addressActionModal, {backdrop: true}).result.then(
       result => {
         if ( result === ModalResult.ACTION ) {
 
@@ -476,7 +476,8 @@ export class SearchComponent implements OnInit {
               }
           );
 
-          this.router.navigate(['/search', {t: SearchType.ADDRESS, m: address.display}]);
+
+          window.open('/search;t=address;m=' + encodeURIComponent(address.display), '_blank');
 
         }
       }
@@ -494,7 +495,7 @@ export class SearchComponent implements OnInit {
       return;
     }
 
-    this.modal.open(this.emailActionModal, {backdrop: 'static'}).result.then(
+    this.modal.open(this.emailActionModal, {backdrop: true}).result.then(
       result => {
         if ( result === ModalResult.ACTION ) {
 
@@ -514,7 +515,7 @@ export class SearchComponent implements OnInit {
               }
           );
 
-          this.router.navigate(['/search', {t: SearchType.EMAIL, m: email.address}]);
+          window.open('/search;t=email;m=' + encodeURIComponent(email.address), '_blank');
 
         }
       }
@@ -532,7 +533,7 @@ export class SearchComponent implements OnInit {
       return;
     }
 
-    this.modal.open(this.phoneActionModal, {backdrop: 'static'}).result.then(
+    this.modal.open(this.phoneActionModal, {backdrop: true}).result.then(
       result => {
         if ( result === ModalResult.ACTION ) {
 
@@ -551,7 +552,7 @@ export class SearchComponent implements OnInit {
               }
           );
 
-          this.router.navigate(['/search', {t: SearchType.PHONE, m: phone.display}]);
+          window.open('/search;t=phone;m=' + encodeURIComponent(phone.display), '_blank');
         }
       }
     ).catch(e => {
