@@ -106,7 +106,7 @@
         <div class="col-sm-3 sectionLabel">Addresses</div>
         <div class="col-sm-9">
           <div class="dataRow" *ngFor="let address of filterAddresses(searchResult.person?.addresses); let in = index">
-            <a href="javascript:void(0)" (click)="addressClick(address)" target="_blank">
+            <a href="javascript:void(0)" (click)="addressClick(address)">
               <div *ngIf="address.street != null">{{generateAddressHomeStreetDisplay(address)}}</div>
               <div>{{address.city}}<span *ngIf="address.city != null">,</span> {{address.state}} {{generateAddressZipcodeDisplay(address)}}</div>
 
@@ -136,7 +136,7 @@
         <div class="col-sm-3 sectionLabel">Websites</div>
         <div class="col-sm-9">
           <div class="dataRow" *ngFor="let url of filterUrls(searchResult.person?.urls); let in = index">
-            <a href="javascript:void(0)" (click)="urlClick(url)" target="_blank">{{url["@name"]}}</a>
+            <a href="javascript:void(0)" (click)="urlClick(url)">{{url["@name"]}}</a>
             <div class="metaData">
               <span *ngIf="url['@type'] != null">{{url["@type"]}}</span>
 
