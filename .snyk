@@ -1,5 +1,5 @@
 # Snyk (https://snyk.io) policy file, patches or ignores known vulnerabilities.
-version: v1.13.5
+version: v1.14.0
 ignore: {}
 # patches apply the minimum changes required to fix a vulnerability
 patch:
@@ -10,3 +10,15 @@ patch:
         patched: '2019-09-11T23:22:16.045Z'
     - auth0 > jwks-rsa > lru-memoizer > lodash:
         patched: '2019-09-11T23:22:16.045Z'
+  SNYK-JS-HTTPSPROXYAGENT-469131:
+    - snyk > proxy-agent > https-proxy-agent:
+        patched: '2019-12-18T11:42:03.803Z'
+    - snyk > proxy-agent > pac-proxy-agent > https-proxy-agent:
+        patched: '2019-12-18T11:42:03.803Z'
+    - auth0 > rest-facade > superagent-proxy > proxy-agent > https-proxy-agent:
+        patched: '2019-12-18T11:42:03.803Z'
+    - auth0 > rest-facade > superagent-proxy > proxy-agent > pac-proxy-agent > https-proxy-agent:
+        patched: '2019-12-18T11:42:03.803Z'
+  SNYK-JS-TREEKILL-536781:
+    - snyk > snyk-sbt-plugin > tree-kill:
+        patched: '2019-12-18T11:42:03.803Z'
