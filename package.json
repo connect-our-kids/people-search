@@ -54,7 +54,7 @@
     "mixpanel": "^0.10.3",
     "rxjs": "~6.3.3",
     "sha-256-js": "^1.0.3",
-    "snyk": "^1.262.2",
+    "snyk": "^1.278.2",
     "then-request": "^6.0.2",
     "tslib": "^1.10.0",
     "web-animations-js": "^2.3.2",
