@@ -42,6 +42,18 @@
   </div>
 </ng-template>
 
+<ng-template #notASocialWorkerModal let-c="close" let-d="dismiss">
+  <div class="modal-header">
+    <h4 class="modal-title" >Thanks for stopping by!</h4>
+  </div>
+  <div class="modal-body">
+    <p>Please visit our website to learn more about our work. </p>
+  </div>
+  <div class="modal-footer justify-content-between">
+    <button type="button" class="btn btn-primary"  ngbAutofocus (click)="visitConnectOurKids()">Visit ConnectOurKids.org</button>
+  </div>
+</ng-template>
+
 <ng-template #watchVideoModal let-c="close" let-d="dismiss">
   <div class="modal-header">
     <h4 class="modal-title" >Two minutes for better results</h4>

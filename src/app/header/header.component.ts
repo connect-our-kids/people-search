@@ -19,6 +19,7 @@ export class HeaderComponent implements OnInit, AfterViewInit {
   @ViewChild('socialWorkerCheckModal') socialWorkerCheckModal: ElementRef;
   @ViewChild('watchVideoModal') watchVideoModal: ElementRef;
   @ViewChild('videoModal') videoModal: ElementRef;
+  @ViewChild('notASocialWorkerModal') notASocialWorkerModal: ElementRef;
   @ViewChild('childServedModal') childServedModal: NgbModal;
 
   @ViewChild('servingChildToolTip') servingChildToolTip: NgbTooltip;
@@ -71,6 +72,11 @@ export class HeaderComponent implements OnInit, AfterViewInit {
     return this.auth.isAuthenticated();
   }
 
+  visitConnectOurKids() {
+    this.analytics.sendEvent('click', 'go-to-connectourkids-website');
+    window.location.href = 'https://www.connectourkids.org/';
+  }
+
   register() {
     this.analytics.sendEvent('click', 'sign-up');
     this.openSocialWorkerCheckModal();
@@ -107,8 +113,10 @@ export class HeaderComponent implements OnInit, AfterViewInit {
   }
 
   noIAmNotASocialWorkerClick() {
+    this.modal.dismissAll();
     this.analytics.sendEvent('click', 'i-am-not-a-social-worker');
-    window.location.href = 'https://www.connectourkids.org/findingfamilies';
+    this.modal.open(this.notASocialWorkerModal, {backdrop: 'static'});
+
   }
 
   postWatchVideoSignUp() {
