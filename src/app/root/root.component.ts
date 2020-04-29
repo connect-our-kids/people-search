@@ -44,22 +44,14 @@ export class RootComponent implements OnInit {
               'email': user['email']
           };
 
-          /*let s = document.createElement('script');
-          s.src = '//survey.survicate.com/workspaces/8e9be799b0c965ff90b58c89ee13f75f/web_surveys.js';
-          s.async = true;
-          let e = document.getElementsByTagName('script')[0];
-          e.parentNode.insertBefore(s, e);*/
-
         }
-
-
 
         // @ts-ignore
         window.Intercom('boot', {
           app_id: 'rz1hwc7q',
           email: user['email'],
           user_id: user['sub'],
-          name: user['name']
+          name: user['given_name'] + ' '  + user['family_name']
         });
 
 

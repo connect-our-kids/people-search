@@ -41,9 +41,12 @@ export class HeaderComponent implements OnInit, AfterViewInit {
     setTimeout(() => {
 
       if (this.sessionStorage.get('servingChildToolTip') !== true) {
-        this.servingChildToolTip.open();
-        setTimeout(() => {this.servingChildToolTip.close(); }, 5000);
-        this.sessionStorage.set('servingChildToolTip', true);
+
+        if (this.servingChildToolTip != null)  {
+          this.servingChildToolTip.open();
+          setTimeout(() => {this.servingChildToolTip.close(); }, 5000);
+          this.sessionStorage.set('servingChildToolTip', true);
+        }
       }
     }, 1000);
 
