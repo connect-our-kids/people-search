@@ -38,7 +38,6 @@ export class SearchFormComponent implements OnInit {
   }
 
   onSearch() {
-    throw new Error('sentry test error');
 
 
     switch (this.searchType) {
