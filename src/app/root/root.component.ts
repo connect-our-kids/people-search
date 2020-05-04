@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import {AuthService} from '../auth.service';
 import {AnalyticsService} from '../analytics.service';
 import { environment } from '../../environments/environment';
+import * as Sentry from '@sentry/browser';
 
 
 @Component({
@@ -55,6 +56,12 @@ export class RootComponent implements OnInit {
         });
 
 
+        Sentry.configureScope(scope => {
+          scope.setUser({
+            id: user['sub'],
+            email: user['email'],
+          });
+        });
 
 
       }
