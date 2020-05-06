@@ -56,7 +56,8 @@
     "then-request": "^6.0.2",
     "tslib": "^1.10.0",
     "web-animations-js": "^2.3.2",
-    "zone.js": "~0.8.26"
+    "zone.js": "~0.8.26",
+    "snyk": "^1.319.0"
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "^0.13.9",
@@ -83,7 +84,6 @@
     "serverless-associate-waf": "^1.1.0",
     "serverless-domain-manager": "^3.2.6",
     "serverless-plugin-include-dependencies": "^3.2.1",
-    "snyk": "^1.290.1",
     "ts-loader": "4.2.0",
     "ts-node": "~7.0.0",
     "tslint": "~5.11.0",
