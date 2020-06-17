@@ -8,7 +8,9 @@ export const environment = {
   APP_URL: "http://localhost:4200",
   AUTH0_CLIENT_ID: "vEspFPTnhrMYNC7Cc7A4sCV6gh7zoJHY",
   AUTH0_AUDIENCE: "https://dev.search.connectourkids.org/api/",
-  APP_NAME: "People Search LOCAL DEV"
+  APP_NAME: "People Search LOCAL DEV",
+  SENTRY_ENABLED: true,
+  ENVIRONMENT_NAME: "local-dev"
 };
 
 /*

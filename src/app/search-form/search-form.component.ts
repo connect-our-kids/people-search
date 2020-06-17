@@ -39,6 +39,7 @@ export class SearchFormComponent implements OnInit {
 
   onSearch() {
 
+
     switch (this.searchType) {
 
       case SearchType.NAME:
