@@ -36,7 +36,7 @@
     "@ng-bootstrap/ng-bootstrap": "^4.2.1",
     "@sentry/browser": "^5.15.5",
     "angular-webstorage-service": "^1.0.2",
-    "auth0": "^2.18.0",
+    "auth0": "^2.27.1",
     "auth0-js": "^9.13.2",
     "aws-param-store": "^3.0.0",
     "aws-serverless-express": "^3.3.6",
