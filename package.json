@@ -45,7 +45,6 @@
     "console-polyfill": "^0.3.0",
     "core-js": "^2.6.9",
     "cors": "~2.8.4",
-    "express-jwt": "^6.0.0",
     "hashmap": "^2.3.0",
     "jsonwebtoken": "^8.5.1",
     "jwks-rsa": "^1.6.0",
