@@ -57,7 +57,7 @@
     "tslib": "^1.10.0",
     "web-animations-js": "^2.3.2",
     "zone.js": "~0.8.26",
-    "snyk": "^1.342.2"
+    "snyk": "^1.425.4"
   },
   "devDependencies": {
     "@angular-devkit/build-angular": "^0.13.9",
