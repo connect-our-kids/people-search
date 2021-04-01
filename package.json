@@ -48,7 +48,7 @@
     "hashmap": "^2.3.0",
     "jsonwebtoken": "^8.5.1",
     "jwks-rsa": "^1.6.0",
-    "lodash": "^4.17.20",
+    "lodash": "^4.17.21",
     "md5": "^2.2.1",
     "mixpanel": "^0.10.3",
     "rxjs": "~6.3.3",
