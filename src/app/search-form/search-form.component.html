@@ -37,14 +37,30 @@
                              (keyup.enter)="onSearch()" />
                     </div>
                   </div>
-
                 </div>
-              </div>
-            </div>
-
-            <div class="row">
-              <div class="col-12" *ngIf="relationshipName != null">
-                Relationship with {{relationshipName}}
+                <div 
+                  *ngIf="showRelationshipInput && searchType === SearchType.NAME" 
+                  class="searchFormInputsWrapper"
+                >
+                  <div class="row">
+                    <div class="col-md-12 relationshipInputWrapper">
+                      <input 
+                        type="text"
+                        formControlName="relationship"
+                        class="relationshipInput"
+                        placeholder="Relationship name optional"
+                        (keyup.enter)="onSearch()"    
+                      />
+                    </div>
+  
+                  </div>
+                </div>
+                <div *ngIf="searchType === SearchType.NAME">
+                  <a 
+                    href="javascript:void(0)" 
+                    (click)="toggleRelationshipInput()"
+                  >{{showRelationshipInput ? 'Hide' : 'Add'}} Relationship</a>
+                </div>
               </div>
             </div>
 

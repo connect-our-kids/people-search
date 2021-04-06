@@ -1,5 +1,4 @@
-@import '../scss-util/mixins';
-
+@import "../scss-util/mixins";
 
 .searchRow {
   margin-top: 0.5em;
@@ -11,14 +10,13 @@
   margin-bottom: 1em;
 }
 .searchType {
-    margin-top: 1.5em;
+  margin-top: 1.5em;
 
   @include respond-below(xs) {
     a:nth-of-type(1) {
       margin-left: 0px;
     }
   }
-
 
   a {
     margin-left: 2em;
@@ -35,8 +33,6 @@
   }
 }
 
-
-
 .searchFormInputsWrapper {
   border: 1px solid #dae1ea;
   background: #fff;
@@ -45,25 +41,23 @@
   margin-bottom: 10px;
 }
 
-
 .searchInputWrapper,
-.locationInputWrapper {
+.locationInputWrapper,
+.relationshipInputWrapper {
   height: 3em;
 
   input {
     width: 100%;
   }
-
 }
-.searchFormInputsWrapper input[type=text] {
-    font-size: 2em;
-    font-weight: 400;
-    height: 100%;
-    border: none;
-    border-radius: 4px;
-    outline: none;
-    width: 100%;
-
+.searchFormInputsWrapper input[type="text"] {
+  font-size: 2em;
+  font-weight: 400;
+  height: 100%;
+  border: none;
+  border-radius: 4px;
+  outline: none;
+  width: 100%;
 
   &::placeholder {
     font-weight: 100;
@@ -72,7 +66,6 @@
   @include respond-below(sm) {
     font-size: 1em;
   }
-
 }
 
 @include respond-above(md) {
@@ -82,11 +75,10 @@
 }
 
 .searchButtonWrapper {
-    vertical-align: top;
-    display: inline-block;
-    max-width: 80px;
-    height: 48px;
-
+  vertical-align: top;
+  display: inline-block;
+  max-width: 80px;
+  height: 48px;
 }
 
 .searchButton {
@@ -95,18 +87,15 @@
 }
 
 .searchButton.btn-primary {
-      border: 1px solid rgb(80,141,179);
-
+  border: 1px solid rgb(80, 141, 179);
 }
 
 .searchButtonWrapper button {
-    width: 100%;
-    max-width: 200px;
-    height: 100%;
-    border: 1px solid rgb(80,141,179);
-    border-radius: 3px;
-    cursor: pointer;
-    z-index: 2;
-
-
+  width: 100%;
+  max-width: 200px;
+  height: 100%;
+  border: 1px solid rgb(80, 141, 179);
+  border-radius: 3px;
+  cursor: pointer;
+  z-index: 2;
 }
