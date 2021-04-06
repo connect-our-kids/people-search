@@ -21,8 +21,6 @@ export class SearchFormComponent implements OnInit {
   SearchType = SearchType;
   searchType = SearchType.NAME;
 
-  relationshipName = null;
-
   private lastParams = {};
   public showRelationshipInput: boolean = false;
 
@@ -116,7 +114,6 @@ export class SearchFormComponent implements OnInit {
 
   parametersChanged(params) {
     this.searchType = this.detectInputType(params);
-    this.relationshipName = params["r"];
     if (params["r"] != null) {
       this.showRelationshipInput = true;
     }
