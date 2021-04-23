@@ -357,8 +357,22 @@ export class SearchFormComponent implements OnInit {
       }
 
       if (this.lastParams["r"] != null) {
+        const names = this.lastParams["r"].split(" ");
         searchObject["relationships"] = [
-          { names: [{ raw: this.lastParams["r"] }] },
+          {
+            names: [
+              {
+                first: names[0] ? names[0] : "",
+                middle:
+                  names.length > 2
+                    ? names
+                        .slice(1, names.length - 1)
+                        .reduce((acc, cur) => acc + " " + cur) || ""
+                    : "",
+                last: names.length > 1 ? names[names.length - 1] : "",
+              },
+            ],
+          },
         ];
       }
     } else if (searchType === SearchType.EMAIL) {
