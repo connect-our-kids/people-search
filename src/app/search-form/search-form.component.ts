@@ -1,19 +1,19 @@
-import {Component, EventEmitter, OnInit, Output} from '@angular/core';
-import {FormControl, FormGroup, Validators} from '@angular/forms';
-import {ActivatedRoute, Params, Router} from '@angular/router';
+import { Component, EventEmitter, OnInit, Output } from "@angular/core";
+import { FormControl, FormGroup, Validators } from "@angular/forms";
+import { ActivatedRoute, Params, Router } from "@angular/router";
 
 @Component({
-  selector: 'app-search-form',
-  templateUrl: './search-form.component.html',
-  styleUrls: ['./search-form.component.scss']
+  selector: "app-search-form",
+  templateUrl: "./search-form.component.html",
+  styleUrls: ["./search-form.component.scss"],
 })
 export class SearchFormComponent implements OnInit {
-
   @Output() searchUpdated: EventEmitter<any> = new EventEmitter();
 
   searchForm = new FormGroup({
-    main: new FormControl('', Validators.minLength(1)),
-    location: new FormControl('')
+    main: new FormControl("", Validators.minLength(1)),
+    location: new FormControl(""),
+    relationship: new FormControl(null),
   });
 
   private sub = null;
@@ -21,27 +21,19 @@ export class SearchFormComponent implements OnInit {
   SearchType = SearchType;
   searchType = SearchType.NAME;
 
-  relationshipName = null;
-
   private lastParams = {};
+  public showRelationshipInput: boolean = false;
 
-
-  constructor(
-    private route: ActivatedRoute,
-    private router: Router
-  ) { }
+  constructor(private route: ActivatedRoute, private router: Router) {}
 
   ngOnInit() {
-    this.sub = this.route.params.subscribe(params => {
-       this.parametersChanged(params);
+    this.sub = this.route.params.subscribe((params) => {
+      this.parametersChanged(params);
     });
   }
 
   onSearch() {
-
-
     switch (this.searchType) {
-
       case SearchType.NAME:
         this.onSearchName();
         break;
@@ -63,67 +55,70 @@ export class SearchFormComponent implements OnInit {
         break;
 
       default:
-        console.error('Unknown type:' + this.searchType);
+        console.error("Unknown type:" + this.searchType);
         this.onSearchName();
-
     }
-
-
   }
 
   onSearchPhone() {
-    const phone = this.searchForm.get('main').value;
-    this.router.navigate(['/search', { m: phone, t: this.searchType.toString()}]);
+    const extras: Object = {
+      m: this.main,
+      t: this.searchType.toString(),
+    };
+    if (this.relationship) {
+      extras["r"] = this.relationship;
+    }
+    this.router.navigate(["/search", extras]);
   }
 
   onSearchAddress() {
-    const address = this.searchForm.get('main').value;
-    this.router.navigate(['/search', { m: address, t: this.searchType.toString()}]);
+    this.router.navigate([
+      "/search",
+      { m: this.main, t: this.searchType.toString() },
+    ]);
   }
 
   onSearchUrl() {
-    const url = this.searchForm.get('main').value;
-
-    this.router.navigate(['/search', { m: encodeURI(url), t: this.searchType.toString()}]);
-
+    this.router.navigate([
+      "/search",
+      { m: encodeURI(this.main), t: this.searchType.toString() },
+    ]);
   }
 
   onSearchEmail() {
-    const name = this.searchForm.get('main').value;
-
-    this.router.navigate(['/search', { m: name, t: this.searchType.toString()}]);
-
+    this.router.navigate([
+      "/search",
+      { m: this.main, t: this.searchType.toString() },
+    ]);
   }
 
   onSearchName() {
+    const extras: Object = {
+      m: this.main,
+      t: this.searchType.toString(),
+    };
 
-    const name = this.searchForm.get('main').value;
-    const location = this.searchForm.get('location').value;
-
-
-    const extras: Object = {m: name, t: this.searchType.toString()};
-
-    if (location != null) {
-      extras['l'] = location;
+    if (this.location != null) {
+      extras["l"] = this.location;
+    }
+    if (this.relationship != null) {
+      extras["r"] = this.relationship;
     }
 
-
-    this.router.navigate(['/search', extras]);
+    this.router.navigate(["/search", extras]);
   }
 
   startOverClick() {
-        this.router.navigate(['/']);
+    this.router.navigate(["/"]);
   }
 
-
-
   parametersChanged(params) {
-
     this.searchType = this.detectInputType(params);
-    this.relationshipName = params['r'];
+    if (params["r"] != null) {
+      this.showRelationshipInput = true;
+    }
 
     switch (this.searchType) {
-
       case SearchType.NAME:
         this.parametersChangedName(params);
         break;
@@ -149,118 +144,109 @@ export class SearchFormComponent implements OnInit {
         break;
 
       default:
-        console.error('Unknown type:' + this.searchType);
-
+        console.error("Unknown type:" + this.searchType);
     }
 
     this.lastParams = params;
 
     this.searchUpdated.emit();
-
-
   }
 
-  parametersChangedPerson(params: String[]) {
-
-
-  }
+  parametersChangedPerson(params: String[]) {}
 
   parametersChangedPhone(params: String[]) {
-    this.searchForm.get('main').setValue(params['m']);
-    this.searchForm.get('location').setValue('');
+    this.searchForm.get("main").setValue(params["m"]);
+    this.searchForm.get("location").setValue("");
   }
 
   parametersChangedAddress(params: String[]) {
-    this.searchForm.get('main').setValue(params['m']);
-    this.searchForm.get('location').setValue('');
+    this.searchForm.get("main").setValue(params["m"]);
+    this.searchForm.get("location").setValue("");
   }
 
   parametersChangedUrl(params: String[]) {
-    this.searchForm.get('main').setValue(params['m']);
-    this.searchForm.get('location').setValue('');
+    this.searchForm.get("main").setValue(params["m"]);
+    this.searchForm.get("location").setValue("");
   }
 
   parametersChangedEmail(params: String[]) {
-    this.searchForm.get('main').setValue(params['m']);
-    this.searchForm.get('location').setValue('');
+    this.searchForm.get("main").setValue(params["m"]);
+    this.searchForm.get("location").setValue("");
   }
 
   parametersChangedName(params: String[]) {
-
-    this.searchForm.get('main').setValue(params['m']);
-    this.searchForm.get('location').setValue(params['l']);
-
+    this.searchForm.get("main").setValue(params["m"]);
+    this.searchForm.get("location").setValue(params["l"]);
+    this.searchForm.get("relationship").setValue(params["r"]);
   }
 
   setSearchType(searchType: SearchType) {
-
     if (this.searchType === searchType) {
       return;
     }
 
-    this.searchForm.get('main').reset();
-    this.searchForm.get('location').reset();
+    this.searchForm.get("main").reset();
+    this.searchForm.get("location").reset();
+    this.searchForm.get("relationship").reset();
 
     this.searchType = searchType;
-
   }
 
   generateSearchHint(searchType: SearchType) {
     if (searchType === SearchType.PHONE) {
-      return 'Phone any format, no letters';
+      return "Phone any format, no letters";
     }
 
     if (searchType === SearchType.ADDRESS) {
-      return '123 Main St, Metropolis, IL';
+      return "123 Main St, Metropolis, IL";
     }
 
     if (searchType === SearchType.NAME) {
-      return 'First and last, middle optional';
+      return "First and last, middle optional";
     }
 
     if (searchType === SearchType.URL) {
-      return 'Social profile link or any URL';
+      return "Social profile link or any URL";
     }
 
     if (searchType === SearchType.EMAIL) {
-      return 'Email address';
+      return "Email address";
     }
 
-    return '';
+    return "";
   }
 
   getTitle() {
-    let title = this.searchForm.get('main').value;
-    if (this.searchForm.get('location').value !== '') {
-      title += ' - ' + this.searchForm.get('location').value;
+    let title = this.searchForm.get("main").value;
+    if (this.searchForm.get("location").value !== "") {
+      title += " - " + this.searchForm.get("location").value;
     }
     return title;
   }
 
-
-  updateSearchParameters(mainInput: String, locationInput: String, searchType: SearchType) {
-
+  updateSearchParameters(
+    mainInput: String,
+    locationInput: String,
+    searchType: SearchType
+  ) {
     const extras: Object = {};
 
-
     if (searchType != null) {
-      extras['t'] = searchType;
+      extras["t"] = searchType;
     }
 
     if (mainInput != null) {
-      extras['m'] = mainInput;
+      extras["m"] = mainInput;
     }
     if (locationInput != null) {
-      extras['l'] = locationInput;
+      extras["l"] = locationInput;
     }
 
-    this.router.navigate(['/search', extras]);
+    this.router.navigate(["/search", extras]);
   }
 
   validateSearch(): SearchValidationResult {
-
-
-    const mainInputValue: String = this.searchForm.get('main').value;
+    const mainInputValue: String = this.searchForm.get("main").value;
 
     if (this.searchType === SearchType.EMAIL) {
       return this.validateEmail(mainInputValue);
@@ -282,20 +268,21 @@ export class SearchFormComponent implements OnInit {
       return this.validateUrl(mainInputValue);
     }
 
-    if ( this.searchType === SearchType.PERSON) {
-      return new SearchValidationResult(true, '', SearchType.PERSON);
+    if (this.searchType === SearchType.PERSON) {
+      return new SearchValidationResult(true, "", SearchType.PERSON);
     }
 
-    return new SearchValidationResult(false, 'Unknown detectedSearchType search type: ' + this.searchType, null);
-
+    return new SearchValidationResult(
+      false,
+      "Unknown detectedSearchType search type: " + this.searchType,
+      null
+    );
   }
 
-
   detectInputType(parameters): SearchType {
+    const mainInputValue: string = parameters["m"];
 
-    const mainInputValue: string = parameters['m'];
-
-    if (parameters['person'] != null) {
+    if (parameters["person"] != null) {
       return SearchType.PERSON;
     }
 
@@ -309,7 +296,6 @@ export class SearchFormComponent implements OnInit {
 
     if (urlValidationResult.valid) {
       return SearchType.URL;
-
     }
 
     const phoneValidationResult = this.validatePhone(mainInputValue);
@@ -324,40 +310,33 @@ export class SearchFormComponent implements OnInit {
       return SearchType.ADDRESS;
     }
 
-
     const nameValidationResult = this.validateName(mainInputValue);
 
     if (nameValidationResult.valid) {
       return SearchType.NAME;
     }
 
-
-
     return this.getSearchTypeFromParams(parameters);
-
   }
 
   getSearchTypeFromParams(parameters: Params) {
-
-
-    if ( parameters['t'] == null) {
+    if (parameters["t"] == null) {
       return SearchType.NAME;
     }
 
     let searchType = null;
 
-    const searchTypeString: string = parameters['t'];
+    const searchTypeString: string = parameters["t"];
 
-    if ( searchTypeString != null ) {
+    if (searchTypeString != null) {
       searchType = this.SearchType[searchTypeString.toUpperCase()];
     }
     return searchType;
   }
 
   getSearchObject(searchValidationResult: SearchValidationResult) {
-
-    if (this.lastParams['person'] != null) {
-      return {search_pointer_hash: this.lastParams['person']};
+    if (this.lastParams["person"] != null) {
+      return { search_pointer_hash: this.lastParams["person"] };
     }
 
     const searchType = searchValidationResult.validatorUsed;
@@ -368,156 +347,224 @@ export class SearchFormComponent implements OnInit {
 
     let searchObject = {};
 
-    if ( searchType === SearchType.NAME) {
+    if (searchType === SearchType.NAME) {
+      searchObject = { names: [{ raw: this.lastParams["m"] }] };
 
-      searchObject = { names: [{raw: this.lastParams['m']}]};
+      const locationValue = this.lastParams["l"];
 
-      const locationValue = this.lastParams['l'];
-
-      if (locationValue != null
-        && locationValue !== '') {
-        searchObject['addresses'] = [{raw: locationValue}];
+      if (locationValue != null && locationValue !== "") {
+        searchObject["addresses"] = [{ raw: locationValue }];
       }
 
-      if ( this.lastParams['r'] != null ) {
-        searchObject['relationships'] = [{names: [{raw: this.lastParams['r']}]}];
+      if (this.lastParams["r"] != null) {
+        const names = this.lastParams["r"].split(" ");
+        searchObject["relationships"] = [
+          {
+            names: [
+              {
+                first: names[0] ? names[0] : "",
+                middle:
+                  names.length > 2
+                    ? names
+                        .slice(1, names.length - 1)
+                        .reduce((acc, cur) => acc + " " + cur) || ""
+                    : "",
+                last: names.length > 1 ? names[names.length - 1] : "",
+              },
+            ],
+          },
+        ];
       }
+    } else if (searchType === SearchType.EMAIL) {
+      searchObject = { emails: [{ address: this.lastParams["m"] }] };
+    } else if (searchType === SearchType.PHONE) {
+      const phoneNumbersOnly = (<String>this.lastParams["m"]).replace(
+        /[^0-9\.]+/g,
+        ""
+      );
 
-    } else if ( searchType === SearchType.EMAIL) {
-
-      searchObject = { emails: [{address: this.lastParams['m']}]};
-
-    }  else if ( searchType === SearchType.PHONE) {
-
-      const phoneNumbersOnly = (<String> this.lastParams['m']).replace(/[^0-9\.]+/g, '');
-
-      searchObject = { phones: [{number: phoneNumbersOnly}]};
-
-    }  else if ( searchType === SearchType.ADDRESS) {
-
-      searchObject = { addresses: [{raw: this.lastParams['m']}]};
-
-    }  else if ( searchType === SearchType.URL) {
-
-      searchObject = { urls: [{url: decodeURI(this.lastParams['m'])}]};
-
+      searchObject = { phones: [{ number: phoneNumbersOnly }] };
+    } else if (searchType === SearchType.ADDRESS) {
+      searchObject = { addresses: [{ raw: this.lastParams["m"] }] };
+    } else if (searchType === SearchType.URL) {
+      searchObject = { urls: [{ url: decodeURI(this.lastParams["m"]) }] };
     }
 
     return searchObject;
-
   }
 
-
+  toggleRelationshipInput() {
+    if (this.showRelationshipInput) {
+      this.searchForm.get("relationship").reset();
+    }
+    return (this.showRelationshipInput = !this.showRelationshipInput);
+  }
 
   validateEmail(email): SearchValidationResult {
-      const re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-      const result: boolean =  re.test(String(email).toLowerCase());
+    const re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    const result: boolean = re.test(String(email).toLowerCase());
 
-      if (!result)  {
-        return new SearchValidationResult(false, 'Please enter a valid email address', SearchType.EMAIL);
-      }
+    if (!result) {
+      return new SearchValidationResult(
+        false,
+        "Please enter a valid email address",
+        SearchType.EMAIL
+      );
+    }
 
-      return new SearchValidationResult(true, '', SearchType.EMAIL);
-
+    return new SearchValidationResult(true, "", SearchType.EMAIL);
   }
 
   validateUrl(url) {
-    if (url == null || url === '') {
-      return new SearchValidationResult(false, 'Please enter a URL', SearchType.URL);
+    if (url == null || url === "") {
+      return new SearchValidationResult(
+        false,
+        "Please enter a URL",
+        SearchType.URL
+      );
     }
 
-    const regexp =  /^(?:(?:https?|ftp):\/\/)?(?:(?!(?:10|127)(?:\.\d{1,3}){3})(?!(?:169\.254|192\.168)(?:\.\d{1,3}){2})(?!172\.(?:1[6-9]|2\d|3[0-1])(?:\.\d{1,3}){2})(?:[1-9]\d?|1\d\d|2[01]\d|22[0-3])(?:\.(?:1?\d{1,2}|2[0-4]\d|25[0-5])){2}(?:\.(?:[1-9]\d?|1\d\d|2[0-4]\d|25[0-4]))|(?:(?:[a-z\u00a1-\uffff0-9]-*)*[a-z\u00a1-\uffff0-9]+)(?:\.(?:[a-z\u00a1-\uffff0-9]-*)*[a-z\u00a1-\uffff0-9]+)*(?:\.(?:[a-z\u00a1-\uffff]{2,})))(?::\d{2,5})?(?:\/\S*)?$/;
+    const regexp = /^(?:(?:https?|ftp):\/\/)?(?:(?!(?:10|127)(?:\.\d{1,3}){3})(?!(?:169\.254|192\.168)(?:\.\d{1,3}){2})(?!172\.(?:1[6-9]|2\d|3[0-1])(?:\.\d{1,3}){2})(?:[1-9]\d?|1\d\d|2[01]\d|22[0-3])(?:\.(?:1?\d{1,2}|2[0-4]\d|25[0-5])){2}(?:\.(?:[1-9]\d?|1\d\d|2[0-4]\d|25[0-4]))|(?:(?:[a-z\u00a1-\uffff0-9]-*)*[a-z\u00a1-\uffff0-9]+)(?:\.(?:[a-z\u00a1-\uffff0-9]-*)*[a-z\u00a1-\uffff0-9]+)*(?:\.(?:[a-z\u00a1-\uffff]{2,})))(?::\d{2,5})?(?:\/\S*)?$/;
 
     const result = regexp.test(url);
 
-    if (!result)  {
-      return new SearchValidationResult(false, 'Please enter a valid URL', SearchType.URL);
+    if (!result) {
+      return new SearchValidationResult(
+        false,
+        "Please enter a valid URL",
+        SearchType.URL
+      );
     }
 
-    return new SearchValidationResult(true, '', SearchType.URL);
-
+    return new SearchValidationResult(true, "", SearchType.URL);
   }
 
   validatePhone(phone) {
-    if (phone == null || phone === '') {
-      return new SearchValidationResult(false, 'Please enter a phone number', SearchType.PHONE);
+    if (phone == null || phone === "") {
+      return new SearchValidationResult(
+        false,
+        "Please enter a phone number",
+        SearchType.PHONE
+      );
     }
 
     if (/[a-zA-Z@#!&*=~`]/g.test(phone)) {
-      return new SearchValidationResult(false, 'Phone numbers must not contain alpha or special symbols', SearchType.PHONE);
+      return new SearchValidationResult(
+        false,
+        "Phone numbers must not contain alpha or special symbols",
+        SearchType.PHONE
+      );
     }
 
-    const numbersOnly = phone.replace(/\D/g, '');
-    if (numbersOnly.length < 10 ) {
-      return new SearchValidationResult(false, 'Phone numbers must 10 or more numbers ', SearchType.PHONE);
+    const numbersOnly = phone.replace(/\D/g, "");
+    if (numbersOnly.length < 10) {
+      return new SearchValidationResult(
+        false,
+        "Phone numbers must 10 or more numbers ",
+        SearchType.PHONE
+      );
     }
 
-    return new SearchValidationResult(true, '', SearchType.PHONE);
-
+    return new SearchValidationResult(true, "", SearchType.PHONE);
   }
 
   validateName(name) {
-
-    if (name == null || name === '') {
-      return new SearchValidationResult(false, 'Please enter a first and last name. Middle name optional', SearchType.NAME);
+    if (name == null || name === "") {
+      return new SearchValidationResult(
+        false,
+        "Please enter a first and last name. Middle name optional",
+        SearchType.NAME
+      );
     }
 
     const regexp = /\d/;
     if (regexp.test(name)) {
-      return new SearchValidationResult(false, 'Names may not contain numbers ', SearchType.NAME);
+      return new SearchValidationResult(
+        false,
+        "Names may not contain numbers ",
+        SearchType.NAME
+      );
     }
 
-    if (name.indexOf(' ') === -1) {
-      return new SearchValidationResult(false, 'Please enter both a first and last name', SearchType.NAME);
+    if (name.indexOf(" ") === -1) {
+      return new SearchValidationResult(
+        false,
+        "Please enter both a first and last name",
+        SearchType.NAME
+      );
     }
 
-    return new SearchValidationResult(true, '', SearchType.NAME);
-
+    return new SearchValidationResult(true, "", SearchType.NAME);
   }
 
   validateAddress(address: String) {
-
-    if (address == null || address === '') {
-      return new SearchValidationResult(false, 'Please enter an address.', SearchType.NAME);
+    if (address == null || address === "") {
+      return new SearchValidationResult(
+        false,
+        "Please enter an address.",
+        SearchType.NAME
+      );
     }
 
     const regexp = /^\d/;
     if (!regexp.test(address.toString())) {
-      return new SearchValidationResult(false, 'Addresses must start with a number.' , SearchType.NAME);
+      return new SearchValidationResult(
+        false,
+        "Addresses must start with a number.",
+        SearchType.NAME
+      );
     }
 
-    if (address.indexOf(' ') === -1 || address.indexOf(' ') === address.lastIndexOf(' ')) {
-      return new SearchValidationResult(false, 'Addresses should contain house numbers, street names, city, and state', SearchType.NAME);
+    if (
+      address.indexOf(" ") === -1 ||
+      address.indexOf(" ") === address.lastIndexOf(" ")
+    ) {
+      return new SearchValidationResult(
+        false,
+        "Addresses should contain house numbers, street names, city, and state",
+        SearchType.NAME
+      );
     }
 
-    return new SearchValidationResult(true, '', SearchType.ADDRESS);
+    return new SearchValidationResult(true, "", SearchType.ADDRESS);
   }
 
+  public get main() {
+    return this.searchForm.get("main").value;
+  }
+
+  public get location() {
+    return this.searchForm.get("location").value;
+  }
+
+  public get relationship() {
+    return this.searchForm.get("relationship").value;
+  }
 }
 
 export class SearchValidationResult {
-
   public valid: Boolean;
 
   public errorMessage: String;
 
   public validatorUsed: SearchType;
 
-
-
-  constructor( valid: Boolean, errorMessage?: String, validatorUsed?: SearchType) {
+  constructor(
+    valid: Boolean,
+    errorMessage?: String,
+    validatorUsed?: SearchType
+  ) {
     this.valid = valid;
     this.errorMessage = errorMessage;
     this.validatorUsed = validatorUsed;
   }
-
 }
 
 export enum SearchType {
-  NAME = 'name',
-  EMAIL = 'email',
-  ADDRESS = 'address',
-  PHONE = 'phone',
-  URL = 'url',
-  PERSON = 'person' // For deeplinking to a specific person
+  NAME = "name",
+  EMAIL = "email",
+  ADDRESS = "address",
+  PHONE = "phone",
+  URL = "url",
+  PERSON = "person", // For deeplinking to a specific person
 }
